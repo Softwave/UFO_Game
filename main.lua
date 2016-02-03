@@ -18,6 +18,7 @@ saveFile:open("r")
 function love.load()
     -- Backgrounds
     bg = love.graphics.newImage("images/bg.png")
+    menuBg = love.graphics.newImage("images/menuBg.png")
 
     -- Sprites
     ufo = love.graphics.newImage("images/ufo.png")

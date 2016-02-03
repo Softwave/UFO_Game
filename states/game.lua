@@ -156,7 +156,7 @@ function game:draw()
         love.graphics.rectangle("fill", v.x, v.y, 16, 3)
     end
     -- Enemy bullets
-    love.graphics.setColor(255, 0, 170)
+    love.graphics.setColor(190, 38, 51)
     for i,v in ipairs(enemyBullets) do
         love.graphics.rectangle("fill", v.x, v.y, 8, 8)
     end
@@ -174,6 +174,8 @@ function game:draw()
     -- Draw the score and hud
     self:drawScore()
 
+    --fps = love.timer.getFPS( )
+    --print(fps)
 
 
 end

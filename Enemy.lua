@@ -49,7 +49,7 @@ function Enemy:update(dt)
     if not self.facingLeft then
         spd = self.speed * - 1
     end
-    self.xPos = self.xPos - spd
+    self.xPos = self.xPos - spd 
 
     -- Wrap around screen
     if self.xPos < -32 then
