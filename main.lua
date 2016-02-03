@@ -49,6 +49,7 @@ function love.load()
     pUfo:setParticleLifetime(4, 4) -- Particles live at least 2s and at most 5s.
     pUfo:setSpread(2*math.pi) -- Explode in all directions
     pUfo:setTangentialAcceleration(200)
+    pUfo:setSizes(3, 2, 1)
     pUfo:setSpeed(200)
     --pUfo:setColors(255, 255, 255, 255, 255, 255, 255, 0) -- Fade to transparency.
     
