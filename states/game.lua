@@ -4,6 +4,7 @@ local utf8 = require("utf8")
 
 require "Ufo"
 require "Enemy"
+require "Powerup"
 require "helpers"
 Timer = require "hump.timer"
 
@@ -22,7 +23,7 @@ hasHighScore = false
 numOfScores = 0
 
 -- Setup player
-player = Ufo:new(512, 256)
+player = Ufo:new(2048, 256)
 
 -- Map
 map = sti.new("maps/map01.lua")
@@ -32,6 +33,9 @@ map = sti.new("maps/map01.lua")
 -- Make enemies respawn? Or some way to keep the game going after u kill them all.
 
 function game:enter()
+    -- Reset player
+    player:reset()
+
     -- Create enemies
     self:spawnEnemies()
 
@@ -105,6 +109,7 @@ function game:update(dt)
             checkBullet = CheckCollision(v.xPos, v.yPos, 32, 32, j.x, j.y, 8, 8)
             if v.alive then
                 if checkBullet then
+                    v.canDropPowerup = true
                     v:die() -- kill the enemy
                     statsScore = statsScore + 1 -- Add to the score
                     -- table.remove(enemies, i) -- delete the enemy
@@ -114,12 +119,24 @@ function game:update(dt)
         end
     end
 
+    -- Powerups
+    for i,v in ipairs(powerups) do
+        checkPowerup = CheckCollision(player.xPos, player.yPos, 32, 32, v.xPos, v.yPos, 8, 8)
+        if checkPowerup then
+            if (player.alive and v.alive) then
+                v:die()
+                player.lives = player.lives + 1
+            end
+        end
+    end
+
     -- Update lives 
     statsLives = player.lives
 
     -- Update levels
     if canMoveToNextLevel then
-        if enemyCount < 2 then
+        if enemyCount == 0 then
+            -- Spawn an object that will let u move to the next level 
             game:nextLevel()
         end
     end
@@ -158,7 +175,8 @@ function game:draw()
     -- Enemy bullets
     love.graphics.setColor(190, 38, 51)
     for i,v in ipairs(enemyBullets) do
-        love.graphics.rectangle("fill", v.x, v.y, 8, 8)
+        --love.graphics.rectangle("fill", v.x, v.y, 8, 8)
+        love.graphics.draw(enemyBulletSprite, v.x, v.y)
     end
 
     love.graphics.setColor(255, 255, 255)
@@ -170,12 +188,17 @@ function game:draw()
         v:draw()
     end
 
+    -- Draw the powerups
+    for i,v in ipairs(powerups) do
+        v:draw()
+    end
+
 
     -- Draw the score and hud
     self:drawScore()
 
-    --fps = love.timer.getFPS( )
-    --print(fps)
+    -- Debug
+
 
 
 end
@@ -240,6 +263,11 @@ function game:drawScore()
 
     end
 
+    -- Reset
+    if showResetText then
+        love.graphics.printf(resetText, scorePosX, 256, love.graphics.getWidth(), "center")
+    end
+
 end
 
 function game:spawnEnemies()
@@ -252,6 +280,11 @@ function game:spawnEnemies()
         else
             randSpeed = randSpeed + (statsLevel / 2)
         end
+        randSpeed = math.ceil(randSpeed)
+        -- randSpeed = love.math.random(1, 2)
+        -- if ((statsLevel + 1) % 3 == 0) then
+        --     randSpeed = randSpeed + 1
+        -- end
         --randSpeed = love.math.random(0.5 + (statsLevel/4), 4.0 + (statsLevel/4))
         -- randSpeed = randSpeed + (statsLevel / 2)
         self:addEnemy(object.x, object.y, randSpeed, randMove)
@@ -287,14 +320,29 @@ function game:cleanUp()
         end
     end
 
+    -- Delete old powerups
+    for i,v in ipairs(powerups) do
+        if not v.alive then
+            table.remove(powerups, i)
+        end
+    end
+
 end
 
 function game:nextLevel()
     canMoveToNextLevel = false
+    showResetText = true
+    resetText = "Next level..."
     enemies = {}
+    enemyBullets = {}
     player:reset()
     self:spawnEnemies()
     statsLevel = statsLevel + 1
+    Timer.after(3.0, function() self:nextLevelTextChange() end)
+end
+
+function game:nextLevelTextChange()
+    showResetText = false
 end
 
 
@@ -330,10 +378,10 @@ function love.keypressed(k)
     -- Debug
     if k == "r" then
         -- game:nextLevel()
-        game:nextLevel()
+        -- game:nextLevel()
     end
     if k == "p" then
-        print(enemyCount)
+        -- print(enemyCount)
     end
 
 end

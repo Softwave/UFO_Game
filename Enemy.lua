@@ -3,6 +3,7 @@
 -- Require 
 Timer = require "hump.timer"
 require "helpers"
+require "Powerup"
 
 -- Constructor
 Enemy = {}
@@ -16,7 +17,7 @@ function Enemy:new(x, y, s, l)
     pEnemy:setSpeed(200)
 
     -- Setup object
-    local enemyData = { xPos = x, yPos = y, speed = s, facingLeft = l, alive = true, canShoot = true, eGibs = pEnemy, playerDist = 0, playerX = 0, playerY = 0, canBeDeleted = false }
+    local enemyData = { xPos = x, yPos = y, speed = s, facingLeft = l, alive = true, canShoot = true, eGibs = pEnemy, playerDist = 0, playerX = 0, playerY = 0, canBeDeleted = false, canDropPowerup = false }
     self.__index = self
 
     return setmetatable(enemyData, self)
@@ -73,6 +74,17 @@ function Enemy:die()
         self.eGibs:emit(32)
         self.alive = false
         love.audio.play(sndBoom)
+
+        -- Powerup
+        if self.canDropPowerup then
+            randNum = love.math.random(10)
+            --print(randNum)
+            if randNum == 7 then
+                local startX = self.xPos + 16
+                local startY = self.yPos + 16
+                table.insert(powerups, Powerup:new(startX, startY))
+            end
+        end
 
         Timer.after(2, function() self:canDelete() end)
     end

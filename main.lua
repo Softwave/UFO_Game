@@ -9,6 +9,9 @@ require "Tserial"
 titleFont = love.graphics.newFont("data/C64.ttf", 24)
 hudFont = love.graphics.newFont("data/C64.ttf", 16)
 
+showResetText = false
+resetText = "Destroy them all!"
+
 saveFile = love.filesystem.newFile("highscores.sav")
 data = ''
 highscores = {}
@@ -16,6 +19,10 @@ playerName = ""
 saveFile:open("r")
 
 function love.load()
+    -- Joysticks 
+    local joysticks = love.joystick.getJoysticks()
+    joystick = joysticks[1]
+
     -- Backgrounds
     bg = love.graphics.newImage("images/bg.png")
     menuBg = love.graphics.newImage("images/menuBg.png")
@@ -25,11 +32,14 @@ function love.load()
     enemy = love.graphics.newImage("images/enemy.png")
     ufoGibs = love.graphics.newImage("images/ufoGibs.png")
     enemyGibs = love.graphics.newImage("images/enemyGibs.png")
+    powerupSprite = love.graphics.newImage("images/powerup.png")
+    enemyBulletSprite = love.graphics.newImage("images/enemyBullet.png")
 
     -- Sounds
     sndBoom = love.audio.newSource("sounds/sndBoom.wav", "static")
     sndShoot = love.audio.newSource("sounds/sndShoot.ogg", "static")
     sndReset = love.audio.newSource("sounds/sndReset.wav", "static")
+    sndPowerup = love.audio.newSource("sounds/sndPowerup.wav", "static")
 
     -- Bullets
     bullets = {}
@@ -41,13 +51,16 @@ function love.load()
     -- Enemies
     enemies = {}
 
+    -- Powerups
+    powerups = {}
+
     -- Maps
     --map = sti:new("maps/map01.lua")
     --map:init()
 
     -- Particle Systems
     pUfo = love.graphics.newParticleSystem(ufoGibs, 32)
-    pUfo:setParticleLifetime(4, 4) -- Particles live at least 2s and at most 5s.
+    pUfo:setParticleLifetime(2, 2) -- Particles live at least 2s and at most 5s.
     pUfo:setSpread(2*math.pi) -- Explode in all directions
     pUfo:setTangentialAcceleration(200)
     pUfo:setSizes(3, 2, 1)

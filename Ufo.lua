@@ -39,27 +39,30 @@ function Ufo:update(dt)
     -- Only do if player is alive
     if self.alive then
         -- Up/Down movement
-        if love.keyboard.isDown("up") then
+        if (love.keyboard.isDown("up") or joystick:isGamepadDown("dpup")) then
             self.yPos = self.yPos - self.speed
         end
-        if love.keyboard.isDown("down") then
+        if (love.keyboard.isDown("down") or joystick:isGamepadDown("dpdown")) then
             self.yPos = self.yPos + self.speed
         end
 
         -- Left/Right movement
-        if love.keyboard.isDown("left") then
+        if (love.keyboard.isDown("left") or joystick:isGamepadDown("dpleft")) then
             self.xPos = self.xPos - self.speed
             self.facingRight = false
         end
-        if love.keyboard.isDown("right") then
+        if (love.keyboard.isDown("right") or joystick:isGamepadDown("dpright")) then
             self.xPos = self.xPos + self.speed
             self.facingRight = true
         end
 
         -- Shoot
-        if love.keyboard.isDown("x") then
+        if (love.keyboard.isDown("x") or joystick:isGamepadDown("a")) then
             self:shoot()
         end
+
+        --anyDown = Joystick:isGamepadDown("a")
+        --print(anyDown)
 
     end
 
@@ -95,10 +98,14 @@ end
 
 -- Reset the player after death
 function Ufo:reset()
-    
     if self.lives > 0 then
 
-        self:setPos(512, 256)
+        showResetText = true
+        if not self.alive then
+            resetText = "New ship..."
+        end
+
+        self:setPos(2048, 256)
         self.alive = true
         -- Make player invincible for a short time
         self.isInvincible = true
@@ -112,6 +119,7 @@ function Ufo:reset()
             end, function()
             self.visible = true
             self.isInvincible = false
+            showResetText = false
         end)
 
     end

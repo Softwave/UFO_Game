@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="256" height="32" tilewidth="16" tileheight="16" nextobjectid="29">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="256" height="32" tilewidth="16" tileheight="16" nextobjectid="43">
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="32" columns="32">
   <image source="../images/tiles.png" width="512" height="16"/>
  </tileset>
@@ -43,21 +43,19 @@
 </data>
  </layer>
  <objectgroup name="Enemies" visible="0">
-  <object id="3" name="Enemy" x="378" y="237" width="27" height="27"/>
-  <object id="5" name="Enemy" x="32" y="418" width="41" height="34"/>
-  <object id="6" name="Enemy" x="109" y="72" width="36" height="32"/>
-  <object id="9" name="Enemy" x="697" y="309" width="29" height="27"/>
-  <object id="10" name="Enemy" x="791" y="129" width="28" height="27"/>
-  <object id="14" name="Enemy" x="916" y="214" width="34" height="26"/>
-  <object id="19" name="Enemy" x="1182" y="320" width="37" height="33"/>
-  <object id="20" name="Enemy" x="1410" y="179" width="44" height="36"/>
-  <object id="21" name="Enemy" x="1871" y="65" width="43" height="39"/>
-  <object id="22" name="Enemy" x="1938" y="391" width="43" height="31"/>
-  <object id="23" name="Enemy" x="2419" y="139" width="35" height="38"/>
-  <object id="24" name="Enemy" x="2752" y="264" width="43" height="46"/>
-  <object id="25" name="Enemy" x="3281" y="156" width="44" height="41"/>
-  <object id="26" name="Enemy" x="3847" y="159" width="37" height="45"/>
-  <object id="27" name="Enemy" x="3471" y="235" width="29" height="26"/>
-  <object id="28" name="Enemy" x="3294" y="348" width="35" height="46"/>
+  <object id="29" name="Enemy1" x="151" y="201" width="35" height="31"/>
+  <object id="30" name="Enemy1" x="324" y="352" width="41" height="38"/>
+  <object id="31" name="Enemy1" x="490" y="133" width="34" height="36"/>
+  <object id="32" name="Enemy1" x="3972" y="112" width="45" height="40"/>
+  <object id="33" name="Enemy1" x="3613" y="411" width="38" height="42"/>
+  <object id="34" name="Enemy1" x="3503" y="131" width="40" height="46"/>
+  <object id="35" name="Enemy1" x="1155" y="314" width="29" height="30"/>
+  <object id="36" name="Enemy1" x="961" y="30" width="35" height="25"/>
+  <object id="37" name="Enemy1" x="2937" y="284" width="36" height="39"/>
+  <object id="38" name="Enemy1" x="2709" y="168" width="34" height="33"/>
+  <object id="39" name="Enemy1" x="1477" y="88" width="38" height="39"/>
+  <object id="40" name="Enemy1" x="2851" y="413" width="34" height="33"/>
+  <object id="41" name="Enemy1" x="3287" y="350" width="33" height="32"/>
+  <object id="42" name="Enemy1" x="726" y="298" width="31" height="35"/>
  </objectgroup>
 </map>

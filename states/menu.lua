@@ -9,6 +9,12 @@ function menu:draw()
     love.graphics.printf("Press 'x' to play", 0, 480, 512, "center")
 end
 
+function menu:update()
+    if (love.keyboard.isDown("x") or joystick:isGamepadDown("a")) then
+        Gamestate.switch(game)
+    end
+end
+
 function menu:keyreleased(key, code)
     if key == 'x' then
         Gamestate.switch(game)
