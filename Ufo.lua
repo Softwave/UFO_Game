@@ -38,27 +38,53 @@ function Ufo:update(dt)
 
     -- Only do if player is alive
     if self.alive then
-        -- Up/Down movement
-        if (love.keyboard.isDown("up") or joystick:isGamepadDown("dpup")) then
-            self.yPos = self.yPos - self.speed
-        end
-        if (love.keyboard.isDown("down") or joystick:isGamepadDown("dpdown")) then
-            self.yPos = self.yPos + self.speed
-        end
+        if joystick then
+            -- Up/Down movement
+            if (love.keyboard.isDown("up") or joystick:isGamepadDown("dpup")) then
+                self.yPos = self.yPos - self.speed
+            end
+            if (love.keyboard.isDown("down") or joystick:isGamepadDown("dpdown")) then
+                self.yPos = self.yPos + self.speed
+            end
 
-        -- Left/Right movement
-        if (love.keyboard.isDown("left") or joystick:isGamepadDown("dpleft")) then
-            self.xPos = self.xPos - self.speed
-            self.facingRight = false
-        end
-        if (love.keyboard.isDown("right") or joystick:isGamepadDown("dpright")) then
-            self.xPos = self.xPos + self.speed
-            self.facingRight = true
-        end
+            -- Left/Right movement
+            if (love.keyboard.isDown("left") or joystick:isGamepadDown("dpleft")) then
+                self.xPos = self.xPos - self.speed
+                self.facingRight = false
+            end
+            if (love.keyboard.isDown("right") or joystick:isGamepadDown("dpright")) then
+                self.xPos = self.xPos + self.speed
+                self.facingRight = true
+            end
 
-        -- Shoot
-        if (love.keyboard.isDown("x") or joystick:isGamepadDown("a")) then
-            self:shoot()
+            -- Shoot
+            if (love.keyboard.isDown("x") or joystick:isGamepadDown("a")) then
+                self:shoot()
+            end
+
+        else 
+             -- Up/Down movement
+            if (love.keyboard.isDown("up")) then
+                self.yPos = self.yPos - self.speed
+            end
+            if (love.keyboard.isDown("down")) then
+                self.yPos = self.yPos + self.speed
+            end
+
+            -- Left/Right movement
+            if (love.keyboard.isDown("left")) then
+                self.xPos = self.xPos - self.speed
+                self.facingRight = false
+            end
+            if (love.keyboard.isDown("right")) then
+                self.xPos = self.xPos + self.speed
+                self.facingRight = true
+            end
+
+            -- Shoot
+            if (love.keyboard.isDown("x")) then
+                self:shoot()
+            end
         end
 
         --anyDown = Joystick:isGamepadDown("a")

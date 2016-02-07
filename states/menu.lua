@@ -10,8 +10,14 @@ function menu:draw()
 end
 
 function menu:update()
-    if (love.keyboard.isDown("x") or joystick:isGamepadDown("a")) then
-        Gamestate.switch(game)
+    if not joystick then
+        if (love.keyboard.isDown("x")) then
+            Gamestate.switch(game)
+        end
+    else
+        if (love.keyboard.isDown("x") or joystick:isGamepadDown("a")) then
+            Gamestate.switch(game)
+        end
     end
 end
 

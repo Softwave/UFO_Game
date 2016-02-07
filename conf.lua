@@ -3,4 +3,5 @@ function love.conf(t)
     t.window.height = 512
     t.window.title = "UFO"
     t.window.vsync = true
+    t.modules.joystick = true
 end
